@@ -20,6 +20,6 @@ describe('Alert', () => {
 
   it('Contains required props', () => {
     const wrapper = mount(<Alert type={'text'}></Alert>);
-    expect(wrapper.props().type).to.equal('text');
+    expect(wrapper.props()).to.have.property('type');
   })
 })
