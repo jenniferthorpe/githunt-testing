@@ -14,7 +14,7 @@ class DateJumpFilter extends React.Component {
       return;
     }
 
-    this.props.updateDateJump(dateJump);
+    this.props.updateDateJump(dateJump); //kolla om den här har körts
   };
 
   toggle = () => {

@@ -1,21 +1,22 @@
-import 'jsdom-global/register'
 import React from 'react';
 import DateJumpFilter from './index';
-import Enzyme from 'enzyme';
-import { mount, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import { expect } from 'chai';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('DateJumpFilter', () => {
-  //   it('Changes on new choice', () => {
-  //     const wrapper = mount(<DateJumpFilter updateDateJump={() => { }} />);
-  //     wrapper.find('DropdownItem').at(0).simulate('click');
+  it('Calls prop updateDateJump', () => {
+    const fakeUpdateDateJump = sinon.fake();
+    const wrapper = shallow(<DateJumpFilter selectedDateJump="week" updateDateJump={fakeUpdateDateJump} />);
+    wrapper.instance().updateDateJump('year');
+    sinon.assert.calledOnce(fakeUpdateDateJump)
+  })
 
-  //   })
+  it('Returns and DO NOT call prop updateDateJump', () => {
+    const fakeUpdateDateJump = sinon.fake();
+    const wrapper = shallow(<DateJumpFilter selectedDateJump="week" updateDateJump={fakeUpdateDateJump} />);
+    wrapper.instance().updateDateJump('week');
+    sinon.assert.notCalled(fakeUpdateDateJump)
+  })
 
-  it('returns opposite', () => {
+  it('Menue default close and toggles', () => {
     const wrapper = shallow(<DateJumpFilter />);
     expect(wrapper.state().dropdownOpen).to.equal(false);
     wrapper.instance().toggle();
@@ -23,7 +24,7 @@ describe('DateJumpFilter', () => {
   })
 
   it('Returns selectedDateJump', () => {
-    const wrapper = mount(<DateJumpFilter />);
+    const wrapper = shallow(<DateJumpFilter />);
     expect(wrapper.instance().getSelectedDateJump()).to.equal('Weekly');
     wrapper.setProps({ selectedDateJump: 'day' })
     expect(wrapper.instance().getSelectedDateJump()).to.equal('Daily');
@@ -34,5 +35,11 @@ describe('DateJumpFilter', () => {
     wrapper.setProps({ selectedDateJump: 'week' })
     expect(wrapper.instance().getSelectedDateJump()).to.equal('Weekly');
   })
+
+  it('renders all options', () => {
+    const wrapper = shallow(<DateJumpFilter />);
+    expect(wrapper.find('DropdownItem')).to.have.lengthOf(4);
+  })
+
 
 })
