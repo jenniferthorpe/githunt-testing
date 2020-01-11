@@ -1,22 +1,30 @@
 import React from 'react';
 import ViewFilter from './index';
-import Enzyme from 'enzyme';
-import { mount, shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import { expect } from 'chai';
 
-Enzyme.configure({ adapter: new Adapter() });
+describe('ViewFilter', () => {
 
-// describe('ViewFilter', () => {
+  it('updates to grid', () => {
+    const fakeUpdateViewType = sinon.fake();
+    const wrapper = shallow(<ViewFilter updateViewType={fakeUpdateViewType} />)
+    wrapper.find('button').at(0).simulate('click');
+    sinon.assert.calledOnce(fakeUpdateViewType)
+    sinon.assert.calledWith(fakeUpdateViewType.firstCall, 'grid')
+  })
 
-//   //HERE - test action/reducer also
+  it('updates to list', () => {
+    const fakeUpdateViewType = sinon.fake();
+    const wrapper = shallow(<ViewFilter updateViewType={fakeUpdateViewType} />)
+    wrapper.find('button').at(1).simulate('click');
+    sinon.assert.calledOnce(fakeUpdateViewType)
+    sinon.assert.calledWith(fakeUpdateViewType.firstCall, 'list')
+  })
 
-//   it('renders view filter option', () => {
-//     const wrapper = mount(<ViewFilter></ViewFilter>)
+  it('renders options', () => {
+    const wrapper = shallow(<ViewFilter />)
+    expect(wrapper.find('div').at(0).hasClass('view-type-wrap')).to.equal(true)
+    expect(wrapper.find('div').at(1).hasClass('view-type')).to.equal(true)
+    expect(wrapper.find('i').at(0).hasClass('fa fa-table')).to.equal(true)
+    expect(wrapper.find('i').at(1).hasClass('fa fa-list')).to.equal(true)
+  })
 
-//   })
-
-//   it('updates prop selectedViewType', () => {
-
-//   })
-// })
+})

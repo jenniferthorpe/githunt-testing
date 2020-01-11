@@ -1,12 +1,5 @@
-import 'jsdom-global/register'
 import React from 'react';
 import Alert from './index';
-import Enzyme from 'enzyme';
-import { shallow, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
-import { expect } from 'chai';
-
-Enzyme.configure({ adapter: new Adapter() });
 
 describe('Alert', () => {
   it('Renders alert with children when passes in', () => {

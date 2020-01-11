@@ -15,11 +15,11 @@ class ViewFilter extends React.Component {
     return (
       <div className="view-type-wrap">
         <div className="view-type btn shadowed cursor-default">
-          <button onClick={ () => this.changeSelected('grid') } className={ classNames({ active: this.props.selectedViewType === 'grid' }) }>
+          <button onClick={() => this.changeSelected('grid')} className={classNames({ active: this.props.selectedViewType === 'grid' })}>
             <i className="fa fa-table mr-2"></i>
             Grid
           </button>
-          <button onClick={ () => this.changeSelected('list') } className={ classNames({ active: this.props.selectedViewType === 'list' }) }>
+          <button onClick={() => this.changeSelected('list')} className={classNames({ active: this.props.selectedViewType === 'list' })}>
             <i className="fa fa-list mr-2"></i>
             List
           </button>
