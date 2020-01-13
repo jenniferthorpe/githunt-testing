@@ -1,18 +1,29 @@
 import React from 'react';
 import Alert from './index';
+import { unstable_renderSubtreeIntoContainer } from 'react-dom';
 
 describe('Alert', () => {
-  it('Renders alert with children when passes in', () => {
-    const wrapper = shallow((
-      <Alert type={'text'}>
-        Hejsan
-    </Alert>
-    ))
-    expect(wrapper.contains('Hejsan')).to.equal(true);
+  let props, wrapper;
+
+  before(() => {
+    props = {
+      type: ''
+    }
+
+    wrapper = mount(<Alert {...props}>Prop children</Alert>)
+
+    return {
+      props,
+      wrapper
+    }
+  }
+  )
+
+  it('Includes prop children', () => {
+    expect(wrapper.contains('Prop children')).to.equal(true);
   })
 
   it('Contains required props', () => {
-    const wrapper = mount(<Alert type={'text'}></Alert>);
     expect(wrapper.props()).to.have.property('type');
   })
 })
