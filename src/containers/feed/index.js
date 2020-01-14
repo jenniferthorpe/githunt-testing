@@ -12,7 +12,7 @@ import GroupHeading from '../../components/group-heading';
 import { fetchTrending } from '../../redux/github/actions';
 import RepositoryList from '../../components/repository-list';
 import RepositoryGrid from '../../components/repository-grid';
-import { updateDateJump, updateLanguage, updateViewType } from '../../redux/preference/actions';
+import { updateDateJump, updateViewType } from '../../redux/preference/actions';
 
 class FeedContainer extends React.Component {
   componentDidMount() {
@@ -22,6 +22,7 @@ class FeedContainer extends React.Component {
     if (existingRepositories.length === 0) {
       this.fetchNextRepositories();
     }
+
   }
 
   fetchNextRepositories() {
@@ -74,17 +75,17 @@ class FeedContainer extends React.Component {
     return dateRange;
   }
 
-  renderTokenWarning() {
-    return !this.props.preference.options.token && (
-      <Alert type='warning'>
-        Make sure to
-        <strong className='ml-1 mr-1'>
-          <Link to='/options'>add a token</Link>
-        </strong>
-        to avoid hitting the rate limit
-      </Alert>
-    );
-  }
+  // renderTokenWarning() {
+  //   return !this.props.preference.options.token && (
+  //     <Alert type='warning'>
+  //       Make sure to
+  //       <strong className='ml-1 mr-1'>
+  //         <Link to='/options'>add a token</Link>
+  //       </strong>
+  //       to avoid hitting the rate limit
+  //     </Alert>
+  //   );
+  // }
 
   renderErrors() {
     if (!this.props.github.error) {
@@ -110,20 +111,19 @@ class FeedContainer extends React.Component {
 
     return (
       <Alert type='danger'>
-        { message }
+        {message}
       </Alert>
     );
   }
 
   renderAlerts() {
-    const tokenWarning = this.renderTokenWarning();
+    // const tokenWarning = this.renderTokenWarning();
     const error = this.renderErrors();
 
-    if (tokenWarning || error) {
+    if (error) {
       return (
         <div className="alert-group">
-          { tokenWarning }
-          { error }
+          {error}
         </div>
       );
     }
@@ -134,14 +134,14 @@ class FeedContainer extends React.Component {
   renderRepositoriesList() {
     if (this.props.preference.viewType === 'grid') {
       return <RepositoryGrid
-        repositories={ this.props.github.repositories || [] }
-        dateJump={ this.props.preference.dateJump }
+        repositories={this.props.github.repositories || []}
+        dateJump={this.props.preference.dateJump}
       />;
     }
 
     return <RepositoryList
-      repositories={ this.props.github.repositories || [] }
-      dateJump={ this.props.preference.dateJump }
+      repositories={this.props.github.repositories || []}
+      dateJump={this.props.preference.dateJump}
     />;
   }
 
@@ -150,47 +150,48 @@ class FeedContainer extends React.Component {
   }
 
   render() {
+    console.log(this.props.github);
     return (
       <div className="page-wrap">
-        <TopNav/>
+        <TopNav />
 
-        { this.renderAlerts() }
+        {this.renderAlerts()}
 
         <div className="container mb-5 pb-4">
           <div className="header-row clearfix">
             {
               this.hasRepositories() && <GroupHeading
-                start={ this.props.github.repositories[0].start }
-                end={ this.props.github.repositories[0].end }
-                dateJump={ this.props.preference.dateJump }
+                start={this.props.github.repositories[0].start}
+                end={this.props.github.repositories[0].end}
+                dateJump={this.props.preference.dateJump}
               />
             }
             <div className="group-filters">
               {
                 this.hasRepositories() && <Filters
-                  selectedLanguage={ this.props.preference.language }
-                  selectedViewType={ this.props.preference.viewType }
-                  updateLanguage={ this.props.updateLanguage }
-                  updateViewType={ this.props.updateViewType }
-                  updateDateJump={ this.props.updateDateJump }
-                  selectedDateJump={ this.props.preference.dateJump }
+                  selectedLanguage={this.props.preference.language}
+                  selectedViewType={this.props.preference.viewType}
+                  // updateLanguage={this.props.updateLanguage}
+                  updateViewType={this.props.updateViewType}
+                  updateDateJump={this.props.updateDateJump}
+                  selectedDateJump={this.props.preference.dateJump}
                 />
               }
             </div>
           </div>
           <div className="body-row">
-            { this.renderRepositoriesList() }
+            {this.renderRepositoriesList()}
 
-            { this.props.github.processing && <Loader/> }
+            {this.props.github.processing && <Loader />}
 
             {
               !this.props.github.processing &&
               this.hasRepositories() &&
               (
                 <button className="btn btn-primary shadow load-next-date"
-                        onClick={ () => this.fetchNextRepositories() }>
+                  onClick={() => this.fetchNextRepositories()}>
                   <i className="fa fa-refresh mr-2"></i>
-                  Load next { this.props.preference.dateJump }
+                  Load next {this.props.preference.dateJump}
                 </button>
               )
             }
@@ -209,7 +210,7 @@ const mapStateToProps = store => {
 };
 
 const mapDispatchToProps = {
-  updateLanguage,
+  // updateLanguage,
   updateViewType,
   updateDateJump,
   fetchTrending
