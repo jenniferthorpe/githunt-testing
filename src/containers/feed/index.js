@@ -150,7 +150,6 @@ class FeedContainer extends React.Component {
   }
 
   render() {
-    console.log(this.props.github);
     return (
       <div className="page-wrap">
         <TopNav />

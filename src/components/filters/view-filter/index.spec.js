@@ -35,14 +35,14 @@ describe('ViewFilter', () => {
     sinon.assert.calledWith(fakeUpdateViewType.firstCall, 'list')
   })
 
-  it('renders options', () => {
+  it('renders wrapping elements', () => {
     expect(wrapper.find('div')).to.have.length(2)
     expect(wrapper.find('i')).to.have.length(2)
+  })
 
-    const grid = wrapper.find('button').at(0);
-    expect(grid.text()).to.equal('Grid');
-    const list = wrapper.find('button').at(1);
-    expect(list.text()).to.equal('List');
+  it('renders buttons', () => {
+    expect(wrapper.find('button').at(0).text()).to.equal('Grid');
+    expect(wrapper.find('button').at(1).text()).to.equal('List');
 
     expect(wrapper.find('button').at(1).hasClass('active')).to.equal(true)
     wrapper.setProps({ selectedViewType: 'grid' })

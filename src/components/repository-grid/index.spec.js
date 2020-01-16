@@ -1,19 +1,16 @@
 import React from 'react';
 import RepositoryGrid from './index';
-var axios = require('axios');
-var MockAdapter = require('axios-mock-adapter');
 
 describe('RepositoryGrid', () => {
-  let props, wrapper, repos;
+  let props, wrapper, spyRenderGroup;
 
   before(async () => {
-    var mock = new MockAdapter(axios);
 
-    mock.onGet('/').reply(200, {
+    props = {
       repositories: [
         {
-          start: 1,
-          end: 2,
+          start: 2020,
+          end: 2020,
           data: {
             items: [{
               name: 'repo1',
@@ -23,36 +20,23 @@ describe('RepositoryGrid', () => {
             }]
           }
         }
-      ]
-    });
-
-    repos = await axios.get('/')
-      .then(function (response) {
-        return response.data.repositories;
-      })
-
-
-    props = {
-      repositories: repos,
+      ],
       dateJump: 'week'
     }
 
+    spyRenderGroup = sinon.spy(RepositoryGrid.prototype, 'renderGroup')
     wrapper = shallow(<RepositoryGrid {...props} />)
 
-    return {
-      props,
-      wrapper
-    }
   }
   )
 
-  // it('Renders', () => {
-  //   const fakeRenderGroup = sinon.fake()
-  //   const div = wrapper.find('div').at(0).hasClass('repositories-grid')
+  it('Renders div with repos', () => {
+    const div = wrapper.find('div').at(0).hasClass('repositories-grid')
+    sinon.assert.calledOnce(spyRenderGroup)
+    expect(spyRenderGroup.callCount).to.equal(props.repositories.length)
 
-  //   sinon.assert.calledOnce(fakeRenderGroup)
 
-  //   // sinon.assert.calledWith(fakeRenderGroup, 'grid')
-  // })
+  })
+
 
 })
