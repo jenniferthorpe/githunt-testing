@@ -4,7 +4,7 @@ import RepositoryGrid from './index';
 describe('RepositoryGrid', () => {
   let props, wrapper, spyRenderGroup;
 
-  before(async () => {
+  before(() => {
 
     props = {
       repositories: [
@@ -16,12 +16,14 @@ describe('RepositoryGrid', () => {
               name: 'repo1',
               name: 'repo2',
               name: 'repo3',
-              name: 'repo4'
+              name: 'repo4',
+              id: '4'
             }]
           }
         }
       ],
-      dateJump: 'week'
+      dateJump: 'week',
+      key: 'test'
     }
 
     spyRenderGroup = sinon.spy(RepositoryGrid.prototype, 'renderGroup')

@@ -24,10 +24,8 @@ const Filters = (props) => (
 );
 
 Filters.propTypes = {
-  updateLanguage: PropTypes.func.isRequired,
   updateViewType: PropTypes.func.isRequired,
   updateDateJump: PropTypes.func.isRequired,
-  selectedLanguage: PropTypes.string,
   selectedViewType: PropTypes.string,
   selectedDateJump: PropTypes.string
 };
